@@ -8,10 +8,8 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
-# 1. Проверяем доступность видеокарты (CUDA)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Используем устройство для вычислений: {device}")
-
 
 # 2. ОПРЕДЕЛЯЕМ СОБСТВЕННУЮ СВЕРТОЧНУЮ НЕЙРОСЕТЬ (CNN)
 class CatDogCNN(nn.Module):
@@ -65,6 +63,8 @@ IMG_SIZE = (128, 128)
 train_transforms = transforms.Compose([
     transforms.Resize(IMG_SIZE),
     transforms.RandomHorizontalFlip(),
+    transforms.RandomRotation(15),                      
+    transforms.ColorJitter(brightness=0.2, contrast=0.2), 
     transforms.ToTensor(),
     transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
 ])
@@ -81,7 +81,7 @@ val_dataset = datasets.ImageFolder('dataset/val', transform=val_transforms)
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
 
-# 4. Инициализация нашей модели
+# 4. Инициализация модели
 model = CatDogCNN().to(device)
 
 # 5. Функция потерь и оптимизатор
@@ -141,4 +141,4 @@ def train_model(epochs=5):
 
 
 if __name__ == '__main__':
-    train_model(epochs=5)
+    train_model(epochs=15)
