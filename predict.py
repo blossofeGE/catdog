@@ -8,7 +8,7 @@ from PIL import Image
 import sys
 
 # Импортируем архитектуру моей модели из train_cnn.py
-from train_cnn import CatDogCNN
+from train_cnn_v2 import CatDogCNN
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -42,7 +42,6 @@ def predict_image(image_path, model_path='models/cat_dog_custom_cnn.pth'):
     # 3. Инференс (предсказание)
     with torch.no_grad():
         outputs = model(input_tensor)
-        # Применяем Softmax для получения вероятностей
         probabilities = torch.softmax(outputs, dim=1)
         confidence, predicted = torch.max(probabilities, 1)
 
