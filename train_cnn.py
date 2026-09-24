@@ -141,4 +141,8 @@ def train_model(epochs=5):
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     train_model(epochs=60)
+=======
+    train_model(epochs=15)
+>>>>>>> 9e4da6999e7307955a2d14149e22a70644e6a864
