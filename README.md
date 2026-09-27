@@ -1,4 +1,4 @@
-Cat vs Dog --- CNN v2 (from scratch)
+'''Cat vs Dog --- CNN v2 (from scratch)
 
 Цель v2 --- улучшить собственную CNN из v1 и одновременно сделать
 архитектуру удобнее для дальнейших экспериментов.
@@ -366,3 +366,4 @@ python train_cnn.py
 
 python predict.py path/to/image.jpg
 
+'''
