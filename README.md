@@ -26,7 +26,7 @@ preprocess.py проверяет изображения через OpenCV и у�
 Архитектура
 
 Input: 3 × 128 × 128
-
+```text
 Conv 3 → 32
 BatchNorm
 ReLU
@@ -56,7 +56,7 @@ Linear 32768 → 256
 ReLU
 Dropout(0.5)
 Linear 256 → 2
-
+```
 Модель полностью обучается с нуля.
 
 Аугментация
