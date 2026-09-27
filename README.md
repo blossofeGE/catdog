@@ -1,22 +1,5 @@
 Cat vs Dog --- CNN v1
 
-Структура
-
-project/
-├── download_data.py
-├── preprocess.py
-├── train_cnn.py
-├── predict.py
-├── dataset/
-│   ├── train/
-│   │   ├── cats/
-│   │   └── dogs/
-│   └── val/
-│       ├── cats/
-│       └── dogs/
-└── models/
-    └── cat_dog_custom_cnn.pth
-
 Данные
 
 download_data.py:
