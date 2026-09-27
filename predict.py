@@ -84,6 +84,4 @@ def predict_image(
 
 
 if __name__ == '__main__':
-    path = "dataset/test/7.jpg"
-
-    predict_image(path)
+    predict_image(sys.argv[1])

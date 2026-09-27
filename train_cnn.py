@@ -20,9 +20,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Устройство: {device}")
 
 
-# =========================
-# CNN FROM SCRATCH
-# =========================
 class ConvBlock(nn.Module):
     """
     Один блок:
@@ -115,8 +112,6 @@ class CatDogCNN(nn.Module):
 # =========================
 # DATA
 # =========================
-# 224x224 дает CNN больше информации о деталях изображения.
-# Нормализация остается простой, т.к. модель обучается с нуля.
 train_transforms = transforms.Compose([
     transforms.Resize((IMG_SIZE, IMG_SIZE)),
 
@@ -216,7 +211,7 @@ def train_model():
 
     criterion = nn.CrossEntropyLoss()
 
-    # AdamW обычно удобнее для такой CNN, чем обычный Adam.
+    # AdamW обычно удобнее 
     optimizer = optim.AdamW(
         model.parameters(),
         lr=LEARNING_RATE,
@@ -294,7 +289,7 @@ def train_model():
                 'models/cat_dog_custom_cnn_v2.pth'
             )
 
-            print("✓ Сохранена лучшая модель")
+            print("!Сохранена лучшая модель!")
         else:
             epochs_without_improvement += 1
 

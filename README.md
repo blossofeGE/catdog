@@ -1,21 +1,5 @@
 Cat vs Dog --- CNN v2 (from scratch)
 
-Описание
-
-Проект решает задачу бинарной классификации изображений кошек и собак.
-
-CNN полностью реализована и обучается с нуля.
-
-Не используются:
-
-pretrained-модели;
-
-ImageNet-веса;
-
-ResNet/VGG/MobileNet;
-
-transfer learning.
-
 Цель v2 --- улучшить собственную CNN из v1 и одновременно сделать
 архитектуру удобнее для дальнейших экспериментов.
 
@@ -370,20 +354,6 @@ Recall
 Количество параметров
 Время обучения
 
-Пример таблицы для будущих экспериментов:
-
-Метрика               CNN v1     CNN v2
-
-Train Accuracy           ---   95.90%*
-Best Val Accuracy        ---        ---
-Test Accuracy            ---        ---
-F1                       ---        ---
-Parameters               ---        ---
-Training time            ---        ---
-
-* --- значение только для показанной 42-й эпохи, а не обязательно
-лучший результат обучения.
-
 Запуск
 
 pip install torch torchvision opencv-python matplotlib requests tqdm pillow
@@ -396,25 +366,3 @@ python train_cnn.py
 
 python predict.py path/to/image.jpg
 
-Следующие эксперименты
-
-После v2 имеет смысл менять по одному параметру за раз:
-
-IMG_SIZE: 128 vs 224 vs 256;
-
-количество ConvBlock;
-
-количество каналов;
-
-augmentation;
-
-learning rate;
-
-optimizer;
-
-dropout;
-
-weight decay.
-
-Так можно понять, какое изменение действительно влияет на качество, а не
-просто получить случайный результат.
