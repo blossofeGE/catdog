@@ -145,41 +145,10 @@ val_transforms = transforms.Compose([
 ])
 
 
-train_dataset = datasets.ImageFolder(
-    'dataset/train',
-    transform=train_transforms
-)
-
-val_dataset = datasets.ImageFolder(
-    'dataset/val',
-    transform=val_transforms
-)
-
-print("Классы:", train_dataset.class_to_idx)
-print("Train:", len(train_dataset))
-print("Val:", len(val_dataset))
-
-train_loader = DataLoader(
-    train_dataset,
-    batch_size=BATCH_SIZE,
-    shuffle=True,
-    num_workers=NUM_WORKERS,
-    pin_memory=torch.cuda.is_available()
-)
-
-val_loader = DataLoader(
-    val_dataset,
-    batch_size=BATCH_SIZE,
-    shuffle=False,
-    num_workers=NUM_WORKERS,
-    pin_memory=torch.cuda.is_available()
-)
-
-
 # =========================
 # VALIDATION
 # =========================
-def evaluate(model, criterion):
+def evaluate(model, criterion, val_loader):
     model.eval()
 
     total = 0
@@ -207,11 +176,42 @@ def evaluate(model, criterion):
 # TRAIN
 # =========================
 def train_model():
+    # Загружаем датасеты
+    train_dataset = datasets.ImageFolder(
+        'dataset/train',
+        transform=train_transforms
+    )
+
+    val_dataset = datasets.ImageFolder(
+        'dataset/val',
+        transform=val_transforms
+    )
+
+    print("Классы:", train_dataset.class_to_idx)
+    print("Train:", len(train_dataset))
+    print("Val:", len(val_dataset))
+
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=BATCH_SIZE,
+        shuffle=True,
+        num_workers=NUM_WORKERS,
+        pin_memory=torch.cuda.is_available()
+    )
+
+    val_loader = DataLoader(
+        val_dataset,
+        batch_size=BATCH_SIZE,
+        shuffle=False,
+        num_workers=NUM_WORKERS,
+        pin_memory=torch.cuda.is_available()
+    )
+
     model = CatDogCNN().to(device)
 
     criterion = nn.CrossEntropyLoss()
 
-    # AdamW обычно удобнее 
+    # AdamW обычно удобнее
     optimizer = optim.AdamW(
         model.parameters(),
         lr=LEARNING_RATE,
@@ -259,7 +259,7 @@ def train_model():
         train_loss = total_loss / total
         train_acc = correct / total
 
-        val_loss, val_acc = evaluate(model, criterion)
+        val_loss, val_acc = evaluate(model, criterion, val_loader)
 
         scheduler.step(val_acc)
 
