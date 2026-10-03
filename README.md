@@ -5,9 +5,6 @@ Cat vs Dog --- CNN v2 (from scratch)
 
 Данные
 
-Проект рассчитан на датасет примерно из 10 000 изображений кошек и
-собак.
-
 download_data.py:
 
 скачивает архив;
@@ -24,7 +21,7 @@ download_data.py:
 
 Важно: отдельный test split пока автоматически не создается. Поэтому
 validation используется для контроля качества во время разработки.
-
+```text
 Архитектура v2
 
 Input: 3 × 224 × 224
@@ -58,9 +55,9 @@ Dropout(0.5)
 Linear 128 → 2
 
 ConvBlock
-
+```
 Каждый блок содержит две convolution:
-
+```text
 Conv
  ↓
 BatchNorm
@@ -74,14 +71,14 @@ BatchNorm
 ReLU
  ↓
 MaxPool
-
+```
 В v1 была только одна convolution на блок.
 
 Большее количество convolution позволяет сети строить более сложное
 представление признаков.
 
 Условно:
-
+```text
 пиксели
   ↓
 края и текстуры
@@ -93,7 +90,7 @@ MaxPool
 сложные признаки
   ↓
 Cat / Dog
-
+```
 Почему 224×224
 
 В v1 использовалось 128×128, в v2 --- 224×224.
@@ -129,13 +126,13 @@ Linear(128 * 16 * 16, 256)
 AdaptiveAvgPool2d((1, 1))
 
 Например:
-
+```text
 256 × 14 × 14
        ↓
 256 × 1 × 1
        ↓
 256 признаков
-
+```
 После этого:
 
 256 → 128 → 2
@@ -210,14 +207,14 @@ Learning-rate scheduler
 
 Если validation accuracy перестает улучшаться, learning rate уменьшается
 в 3.33 раза:
-
+```text
 0.001
  ↓
 0.0003
  ↓
 0.00009
 ...
-
+```
 Это позволяет продолжить оптимизацию более маленькими шагами.
 
 Early stopping
@@ -246,6 +243,8 @@ val_acc.
 
 Характеристика           v1                 v2
 
+Обучение с нуля          Да                 Да
+Pretrained weights       Нет                Нет
 Conv-блоков              3                  4
 Conv на блок             1                  2
 Всего Conv               3                  8
@@ -331,29 +330,6 @@ train и validation accuracy составляет примерно 2--2.5 про
 Для окончательной оценки нужно смотреть всю историю обучения и,
 желательно, отдельный test set.
 
-Как корректно сравнить v1 и v2
-
-Чтобы сравнение было честным, желательно использовать:
-
-один и тот же датасет;
-
-один и тот же train/validation split;
-
-одинаковый test set;
-
-одинаковый критерий оценки.
-
-Сравнивать стоит как минимум:
-
-Train Accuracy
-Validation Accuracy
-Test Accuracy
-F1
-Precision
-Recall
-Количество параметров
-Время обучения
-
 Запуск
 
 pip install torch torchvision opencv-python matplotlib requests tqdm pillow
@@ -365,4 +341,3 @@ python train_cnn.py
 Предсказание:
 
 python predict.py path/to/image.jpg
-
